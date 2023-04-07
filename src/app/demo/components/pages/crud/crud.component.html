@@ -1,0 +1,263 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajout Projet" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Supprimer  projet" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProjects()" [disabled]="!selectedProjects || !selectedProjects.length"></button>
+                    </div>
+                   
+                </ng-template>
+
+                <!--ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template-->
+            </p-toolbar>
+
+
+            <!--        Liste de projets           -->
+            <p-table #dt [value]="projects" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProjects" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Listes de  projets</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="intitule">Intitulé <p-sortIcon field="intitule"></p-sortIcon></th>
+                        <th pSortableColumn="maitre_oeuvre">Maître d'oeuvre<p-sortIcon field="maitre_oeuvre"></p-sortIcon></th>
+                        <th pSortableColumn="maitre_ouvrage">Maître d'ouvrage<p-sortIcon field="maitre_ouvrage"></p-sortIcon></th>
+
+
+                        <th pSortableColumn="cout_total">Coût Total(TND) <p-sortIcon field="cout_total"></p-sortIcon></th>
+                        <th pSortableColumn="dateDeb">Date Début<p-sortIcon field="dateDeb"></p-sortIcon></th>
+                        <th pSortableColumn="dateFin">Date Fin<p-sortIcon field="dateFin"></p-sortIcon></th>
+
+                        <th pSortableColumn="secteur">Secteur <p-sortIcon field="secteur"></p-sortIcon></th>
+                        <th pSortableColumn="stade">Stade <p-sortIcon field="stade"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{product.code || product.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+                 
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Price</span>
+                            {{product.price | currency:'USD'}}
+                        </td>
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{product.category}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
+                            <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                            <span [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{product.inventoryStatus}}</span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProject(product)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProject(product)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <!--MODAL    --> 
+        <p-dialog [(visible)]="projectDialog" [style]="{width: '800px'}" header="Nouveau  projet" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <!--img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"-->
+                
+                
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="code">Code</label>
+                        <!--p-inputNumber id="code" [(ngModel)]="project.code" mode="currency" currency="USD" locale="en-US"></p-inputNumber-->
+                        <input type="text" pInputText id="code" [(ngModel)]="project.code" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.code}"/>
+
+                    </div>
+                    <div class="field col">
+                        <label for="intitule">Intitulé</label>
+                        <p-inputNumber id="intitule" [(ngModel)]="project.intitule"></p-inputNumber>
+                    </div>
+                </div>
+                
+                <div class="formgrid grid">
+                <div class="field col">
+                    <label for="maitre_oeuvre">Maître d'oeuvre</label>
+                    <input type="text" pInputText id="maitre_oeuvre" [(ngModel)]="project.maitre_oeuvre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.maitre_oeuvre}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !project.maitre_oeuvre">Name is required.</small>
+                </div>
+
+                <div class="field col">
+                    <label for="maitre_ouvrage">Maître d'ouvrage</label>
+                    <input type="text" pInputText id="maitre_ouvrage" [(ngModel)]="project.maitre_ouvrage" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.maitre_ouvrage}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !project.maitre_ouvrage">Name is required.</small>
+                </div>
+
+            </div>
+
+                <div class="field">
+                    <label for="description">Description</label>
+                    <textarea id="description" pInputTextarea [(ngModel)]="project.description" required rows="3" cols="20"></textarea>
+                </div>
+
+
+                <div class="formgrid grid">
+                <div class="field col">
+                    <label for="monnaie_projet">Monnaie Projet</label>
+                    <p-dropdown [(ngModel)]="project.monnaie_projet" inputId="monnaie_projet" optionValue="label" [options]="statuses" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="project && project.monnaie_projet" [class]="'product-badge status-' + project.monnaie_projet.toString().toLowerCase()">{{project.monnaie_projet}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'product-badge status-' + option.value">{{option.label}}</span>  <!--???-->
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="field col">
+                    <label for="taux_rent_eco">Taux Rentabilité Econmique</label>
+                    <p-inputNumber id="taux_rent_eco" [(ngModel)]="project.taux_rent_eco" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                </div>
+
+
+                <div class="field col">
+                    <label for="taux_rent_interneInit">Taux Rentabilité Interne initial</label>
+                    <p-inputNumber id="taux_rent_interneInit" [(ngModel)]="project.taux_rent_interneInit" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                </div>
+
+                </div>
+
+
+                <div class="formgrid grid">
+                  
+                    <div class="field col">
+                        <label for="cout_total">Coût</label>
+                        <p-inputNumber id="cout_total" [(ngModel)]="project.cout_total"></p-inputNumber>
+                    </div>
+            
+
+                <div class="field col">
+                    <label for="dateDeb">Date Début</label>
+                    <p-inputNumber id="dateDeb" [(ngModel)]="project.dateDeb" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                </div>
+
+                <div class="field col">
+                    <label for="dateFin">Date Fin</label>
+                    <p-inputNumber id="dateFin" [(ngModel)]="project.dateFin" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                </div>
+
+            </div>
+
+            
+            <div class="formgrid grid">
+                <div class="field col">
+                    <label for="stade">Stade</label>
+                    <p-dropdown [(ngModel)]="project.stade" inputId="stade" optionValue="label" [options]="statuses" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="project && project.stade" [class]="'product-badge status-' + project.stade.toString().toLowerCase()">{{project.stade}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+
+                <div class="field col">
+                    <label for="secteur">Secteur</label>
+                    <p-dropdown [(ngModel)]="project.secteur" inputId="secteur" optionValue="label" [options]="statuses" placeholder="Select">
+                        <ng-template pTemplate="selectedItem">
+                            <span *ngIf="project && project.secteur" [class]="'product-badge status-' + project.secteur.toString().toLowerCase()">{{project.secteur}}</span>
+                        </ng-template>
+                        <ng-template let-option pTemplate="item">
+                            <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                </div>
+
+
+                <div class="field">
+                    <label for="observations">Observations</label>
+                    <textarea id="observations" pInputTextarea [(ngModel)]="project.observations" required rows="3" cols="20"></textarea>
+                </div>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+
+        <!--FIN MODAL-->
+
+        <p-dialog [(visible)]="deleteProjectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="project">Are you sure you want to delete <b>{{project.intitule}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProjectDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteProjectsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected projects?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProjectsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
