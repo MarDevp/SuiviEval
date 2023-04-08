@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from 'src/app/demo/api/project';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Project } from 'src/app/demo/api/project';
 import { ProjectService } from 'src/app/demo/service/project.service';
+import { ProjectCNI } from 'src/app/model/ProjectCNI';
 
 @Component({
     templateUrl: './crud.component.html',
@@ -33,6 +34,7 @@ export class CrudComponent implements OnInit {
     constructor(private projectservice: ProjectService, private messageService: MessageService) { }
 
     ngOnInit() {
+
         this.projectservice.getProjects().then(data => this.projects = data);
 
         this.cols = [
@@ -48,6 +50,11 @@ export class CrudComponent implements OnInit {
             { label: 'LOWSTOCK', value: 'lowstock' },
             { label: 'OUTOFSTOCK', value: 'outofstock' }
         ];
+
+
+console.log("**************************************")
+        this.listOfProjects();
+
     }
 
     openNew() {
@@ -65,10 +72,10 @@ export class CrudComponent implements OnInit {
         this.projectDialog = true;
     }
 
-    deleteProject(project: Project) {
+    /*deleteProject(project: Project) {
         this.deleteProjectDialog = true;
         this.project = { ...project };
-    }
+    }*/
 
     confirmDeleteSelected() {
         this.deleteProjectsDialog = false;
@@ -138,4 +145,69 @@ export class CrudComponent implements OnInit {
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
+
+
+
+
+    projetsCNI:any;
+  
+
+
+
+    listOfProjects(): void {
+        console.log('liste')
+        this.projectservice.getAllProjects()
+          .subscribe(res => {
+            this.projetsCNI = res;
+          console.log("liste:",this.projetsCNI)
+          
+          console.log("testttttttt liste");
+    
+    
+          });
+      }
+
+
+      saveProject() {
+        this.projectservice
+        .createProject(this.newProject).subscribe(data => {
+          console.log(data)
+          this.newProject = new ProjectCNI();
+    
+          console.log('newProject', this.newProject);
+          
+        }, 
+        error => console.log(error));
+      }
+
+
+      newProject :ProjectCNI=new ProjectCNI();
+  today=new Date();
+ 
+
+
+
+// ajout d'un projet
+  createProject(){
+
+    console.log("start");
+   // this.newProject.code_projet=12;
+    //this.newProject.intitule_projet="test";
+    this.saveProject();
+
+    console.log("stop");
+
+
+  }
+
+  deleteProject(projectId: number) {
+    this.projectservice.deleteProject(projectId).subscribe(response => {
+      console.log('Project deleted successfully:', response);
+      // Do something with the response if needed
+    }, error => {
+      console.error('Error deleting project:', error);
+      // Handle the error if needed
+    });
+  }
+
 }
