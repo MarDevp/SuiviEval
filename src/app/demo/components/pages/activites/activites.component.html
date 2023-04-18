@@ -1,0 +1,112 @@
+<div class="grid">
+    <div class="col-12">
+      
+        <div class="card">
+            <h4>Activites</h4>
+   
+          
+            <div class="d-flex justify-content-end">
+                <p-dropdown placeholder="Selectionnez un projet" [showClear]="true"></p-dropdown>
+                <button pButton label="Creez un nouvel indicateur" icon="pi pi-plus" class="p-button-success ml-2"></button>
+              </div>
+      
+        </div>
+    </div>
+  
+  
+  
+    <div class="col-12">
+      <p-card>
+            
+            <ng-template pTemplate="title" >
+                <div class="flex flex-wrap gap-2 justify-content-end" >
+                    <button pButton pRipple type="button" label="Objectif Global"  icon="pi pi-plus" class="p-button-outlined p-button-info"></button>
+                    <button pButton pRipple type="button" label="Objectif Specifique" icon="pi pi-plus"class="p-button-outlined p-button-primary"></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Resulat attendu" class="p-button-outlined p-button-help"></button>
+                    
+                </div>
+            </ng-template>
+      
+            
+      
+              
+            <!--card body-->
+        <div>
+        
+              <p-table>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Nom</th>
+                    <th>Format</th>
+                    <th>Fréquence</th>
+                    <th>Statut</th>
+                    <th>Réel vs Cible</th>
+                    <th>Actions</th>
+  
+                  </tr>
+                </ng-template>
+              </p-table>
+            
+              <p-toolbar styleClass="mb-4">
+                <div class="grid">
+                  <div class="col-4">
+                    <h6>Obj. Global</h6>
+                  </div>
+                  <div class="col-8">
+                    <h6>Libellé objectif + description</h6>
+                  </div>
+                </div>
+              </p-toolbar>
+        
+        
+        <!--les indicateurs du obj. global -->
+              
+        <!--p-table [value]="data">
+  
+    
+          <ng-template pTemplate="body" let-row>
+            <tr>
+              <td>{{row.nom}}</td>
+              <td>{{row.format}}</td>
+              <td>{{row.frequence}}</td>
+              <td>{{row.statut}}</td>
+              <td>{{row.reelVsCible}}</td>
+              <td>
+                <div class="flex">
+                  <button pButton pRipple type="button" icon="pi pi-file-edit" class="p-button-rounded p-button-help"></button>
+                  <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+                </div>
+            </td>
+            </tr>
+          </ng-template>
+  
+        </p-table-->
+        
+     
+              <p-toolbar styleClass="mb-4">
+                <div class="grid">
+                  <div class="col-4">
+                    <h6>Obj. Spécifique</h6>
+                  </div>
+                  <div class="col-8">
+                    <h6>Libellé objectif + description</h6>
+                  </div>
+                </div>
+              </p-toolbar>
+        
+        
+        
+        
+        
+            </div>
+            
+           
+       
+     </p-card>
+   </div>
+  
+  
+   
+   
+  </div>
+  

@@ -5,6 +5,8 @@ import { Project } from 'src/app/demo/api/project';
 import { ProjectService } from 'src/app/demo/service/project.service';
 import { ProjectCNI } from 'src/app/model/ProjectCNI';
 
+//import { UserService } from 'src/app/_services/user.service';
+
 @Component({
     templateUrl: './crud.component.html',
     providers: [MessageService]
@@ -27,15 +29,37 @@ export class CrudComponent implements OnInit {
 
     cols: any[] = [];
 
-    statuses: any[] = [];
+    monnaies: any[] = [];
+
+    stades: any[] = [];
+
+    secteurs: any[] = [];
+   // content?: string;
+
 
     rowsPerPageOptions = [5, 10, 20];
+    errorMessage: string | undefined;
 
     constructor(private projectservice: ProjectService, private messageService: MessageService) { }
 
     ngOnInit() {
 
-        this.projectservice.getProjects().then(data => this.projects = data);
+      /*  this.userService.getPublicContent().subscribe({
+            next: data => {
+              this.content = data;
+            },
+            error: err => {console.log(err)
+              if (err.error) {
+                this.content = JSON.parse(err.error).message;
+              } else {
+                this.content = "Error with status: " + err.status;
+              }
+            }
+          });
+          */
+
+         this.projectservice.getProjects().then(data => this.projects = data);
+        //this.listOfProjects();
 
         this.cols = [
             { field: 'project', header: 'Project' },
@@ -45,10 +69,29 @@ export class CrudComponent implements OnInit {
             { field: 'inventoryStatus', header: 'Status' }
         ];
 
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
+        this.stades = [
+            { label: 'en cours', value: 'en cours' },
+            { label: 'en continuation avec difficulté', value: 'en continuation avec difficulté' },
+            { label: 'clôturé', value: 'clôturé' },
+           
+        ];
+
+        this.monnaies = [
+            { label: 'Dinar Tunisien', value: 'TND' },
+            { label: 'Euro', value: 'EUR' },
+            { label: 'Dollar Américain', value: 'USD' },
+            { label: 'Yen', value: 'YEN' }
+        ];
+
+        this.secteurs = [
+            { label: 'Education', value: 'Education' },
+            { label: 'Environnement', value: 'Environnement' },
+            { label: 'Santé', value: 'Santé' },
+            { label: 'Energie', value: 'Energie' },
+            { label: 'IT', value: 'IT' },
+            { label: 'Construction', value: 'Construction' },
+            { label: 'Agriculture ', value: 'Agriculture' },
+            { label: 'Arts ', value: 'Arts' }
         ];
 
 
@@ -67,10 +110,10 @@ console.log("**************************************")
         this.deleteProjectsDialog = true;
     }
 
-    editProject(project: Project) {
+    /*editProject(project: Project) {
         this.project = { ...project };
         this.projectDialog = true;
-    }
+    }*/
 
     /*deleteProject(project: Project) {
         this.deleteProjectDialog = true;
@@ -169,6 +212,14 @@ console.log("**************************************")
 
 
       saveProject() {
+        this.submitted = true;
+
+
+        if (!this.newProject.intitule_projet ||  !this.newProject.maitre_oeuvre || !this.newProject.maitre_ouvrage || !this.newProject.cout_total || !this.newProject.dateDeb_projet || !this.newProject.dateFin_projet ) {
+            this.errorMessage = "Project name is required";
+            return; // return without creating a new project if name is not provided
+        }
+
         this.projectservice
         .createProject(this.newProject).subscribe(data => {
           console.log(data)
@@ -176,12 +227,14 @@ console.log("**************************************")
     
           console.log('newProject', this.newProject);
           
+          this.listOfProjects();
+          
         }, 
         error => console.log(error));
       }
 
 
-      newProject :ProjectCNI=new ProjectCNI();
+  newProject :ProjectCNI=new ProjectCNI();
   today=new Date();
  
 
@@ -190,12 +243,17 @@ console.log("**************************************")
 // ajout d'un projet
   createProject(){
 
+    console.log("1:newProject.intitule_projet:");
     console.log("start");
-   // this.newProject.code_projet=12;
-    //this.newProject.intitule_projet="test";
     this.saveProject();
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Projet crée', life: 3000 });
+   
+    this.projectDialog = false;
+            this.project = {};   //??
 
     console.log("stop");
+
+    console.log("2:newProject.intitule_projet:");
 
 
   }
@@ -204,10 +262,21 @@ console.log("**************************************")
     this.projectservice.deleteProject(projectId).subscribe(response => {
       console.log('Project deleted successfully:', response);
       // Do something with the response if needed
+      this.listOfProjects();
+
+
     }, error => {
       console.error('Error deleting project:', error);
       // Handle the error if needed
+
     });
+  }
+
+
+  editProject(project: ProjectCNI){
+    this.projectDialog=true;
+    this.newProject=project;
+
   }
 
 }

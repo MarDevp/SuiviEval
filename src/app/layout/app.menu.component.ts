@@ -85,11 +85,79 @@ export class AppMenuComponent implements OnInit {
                             }
                         ]
                     },
+                 
+
                     {
-                        label: 'Crud',
+                        label: 'Administration', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Gestion Utilisateurs',
+                                icon: 'pi pi-fw pi-pencil',
+                                routerLink: ['/pages/gestionUtilisateurs']
+                              
+                            },
+                           
+                        ]
+                    },
+
+                    {
+                        label: 'Portefeuille et Affectation', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Projets', icon: 'pi pi-fw pi-bookmark',routerLink: ['/pages/projetsPortefeuille']
+                              
+                            },
+                            {
+                                label: 'Affectation Chefs Projet', icon: 'pi pi-fw pi-bookmark',routerLink: ['/pages/affectationCP']
+                              
+                            },
+                        ]
+                    },
+
+
+                    {
+                        label: 'Fiches projets',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/pages/crud']
+                        //routerLink: ['/project-monitoring-app/pages/crud']
                     },
+                    /*{
+                        label: 'Cadre Logique',
+                        icon: 'pi pi-fw pi-pencil',
+                        routerLink: ['/pages/cadreLogique']
+                        //routerLink: ['/project-monitoring-app/pages/cadreLogique']
+                    },*/
+
+                    {
+                        label: 'Cadre logique et Indicateurs', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Cadre Logique', icon: 'pi pi-fw pi-bookmark',routerLink: ['/pages/cadreLogique']
+                              
+                            },
+                            {
+                                label: 'Indicateurs', icon: 'pi pi-fw pi-bookmark',routerLink: ['/pages/indicateurs']
+                              
+                            },
+                        ]
+                    },
+
+    
+                    {
+                        label: 'Activités',
+                        icon: 'pi pi-fw pi-pencil',
+                        routerLink: ['/pages/activites']
+                        //routerLink: ['/project-monitoring-app/pages/crud']
+                    },
+
+                    {
+                        label: 'Finances',
+                        icon: 'pi pi-fw pi-pencil',
+                        routerLink: ['/pages/finances']
+                        //routerLink: ['/project-monitoring-app/pages/crud']
+                    },
+
+
                     {
                         label: 'Timeline',
                         icon: 'pi pi-fw pi-calendar',
@@ -107,6 +175,10 @@ export class AppMenuComponent implements OnInit {
                     },
                 ]
             },
+
+
+
+
             {
                 label: 'Hierarchy',
                 items: [

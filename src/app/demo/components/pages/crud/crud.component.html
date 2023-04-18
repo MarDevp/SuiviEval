@@ -4,10 +4,13 @@
             <p-toast></p-toast>
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
-                    <div class="my-2">
+                    
+                   
+                    <div class="my-2 float-right">
                         <button pButton pRipple label="Ajout Projet" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                         <!--button pButton pRipple label="Supprimer  projet" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProjects()" [disabled]="!selectedProjects || !selectedProjects.length"></button-->
-                    </div>
+                 
+                </div>
                    
                 </ng-template>
 
@@ -107,7 +110,7 @@
 
 
 
-            <p-table #dt [value]="projetsCNI" [columns]="cols" responsiveLayout="scroll" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProjects" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="projetsCNI" [columns]="cols" responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Listes de  projets</h5>
@@ -141,8 +144,8 @@
 
 
                 
-                <ng-template pTemplate="body" >
-                    <tr *ngFor="let projectcni of projetsCNI" >
+                <ng-template pTemplate="body" let-projectcni >
+                    <tr>
                         <!--td>
                             <p-tableCheckbox [value]="projectcni"></p-tableCheckbox>
                         </td-->
@@ -199,7 +202,7 @@
                   
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" ></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProject(projectcni)" ></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProject(projectcni.id_projet)"></button>
                             </div>
                         </td>
@@ -210,33 +213,37 @@
         </div>
 
         <!--MODAL    --> 
-        <p-dialog [(visible)]="projectDialog" [style]="{width: '800px'}" header="Nouveau  projet" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="projectDialog" [style]="{width: '800px'}" header="Modifier fiche  projet" [modal]="true" class="p-fluid">
+            <!--form id="form" role="form" #testForm="ngForm" ngNativeValidate-->
             <ng-template pTemplate="content">
                 <!--img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"-->
                 
+               
                 
                 <div class="formgrid grid">
                     <!--div class="field col">
                         <label for="code">Code</label-->
-                            <!--input type="text" id="code" pInputText placeholder="code" [disabled]="true"/>
+                            <!--input type="text" id"code" pInputText placeholder="code" [disabled]="true"/>
                     </div-->
 
                     <div class="field col">
                         <label for="intitule">Intitulé</label>
-                        <input type="text" id="intitule" pInputText [(ngModel)]="newProject.intitule_projet" required/>
+                        <input type="text" id="intitule" pInputText [(ngModel)]="newProject.intitule_projet" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.intitule_projet}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.intitule_projet">Intitulé est obligatoire.</small>
+
                     </div>
 
                     <div class="field col">
                         <label for="maitre_oeuvre">Maître d'oeuvre</label>
-                        <input type="text"  id="maitre_oeuvre" pInputText  [(ngModel)]="newProject.maitre_oeuvre" required >
-    <!--                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !project.maitre_oeuvre">Name is required.</small>
-     -->                </div>
+                        <input type="text"  id="maitre_oeuvre" pInputText  [(ngModel)]="newProject.maitre_oeuvre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.maitre_oeuvre}" >
+                      <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.maitre_oeuvre">Maître d'oeuvre est obligatoire.</small>
+                     </div>
     
                     <div class="field col">
                         <label for="maitre_ouvrage">Maître d'ouvrage</label>
-                        <input type="text"  id="maitre_ouvrage" pInputText [(ngModel)]="newProject.maitre_ouvrage" required />
-    <!--                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !project.maitre_ouvrage">Name is required.</small>
-     -->                </div>
+                        <input type="text"  id="maitre_ouvrage" pInputText [(ngModel)]="newProject.maitre_ouvrage" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.maitre_ouvrage}" />
+                       <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.maitre_ouvrage">Maître d'ouvrage est obligatoire.</small>
+                    </div>
                
                 </div>
             
@@ -259,7 +266,7 @@
                         </ng-template>
                     </p-dropdown-->
 
-                    <p-dropdown [options]="statuses" [(ngModel)]="newProject.monnaie_projet" inputId="monnaie_projet" placeholder="Select" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="monnaies" [(ngModel)]="newProject.monnaie_projet" inputId="monnaie_projet" placeholder="Select" [showClear]="true"></p-dropdown>
 
                 </div>
 
@@ -281,19 +288,25 @@
                   
                     <div class="field col">
                         <label for="cout_total">Coût Total (TND)</label>
-                        <input  type="text" pInputText id="cout_total" [(ngModel)]="newProject.cout_total" required/>
+                        <input  type="text" pInputText id="cout_total" [(ngModel)]="newProject.cout_total" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.cout_total}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.cout_total">Coût Total est obligatoire.</small>
+
                     </div>
             
 
                 <div class="field col">
                     <label for="dateDeb">Date Début</label>
                     <!--p-inputNumber id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" mode="currency" currency="USD" locale="en-US"></p-inputNumber-->
-                    <p-calendar [required]="true" id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" [showIcon]="true" inputId="icon" ></p-calendar>
+                    <p-calendar [required]="true" id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateDeb_projet}" ></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.dateDeb_projet">Date Début est obligatoire.</small>
+
                 </div>
 
                 <div class="field col">
                     <label for="dateFin">Date Fin</label>
-                    <p-calendar id="dateFin" [(ngModel)]="newProject.dateFin_projet" [showIcon]="true" inputId="icon" [required]="true"></p-calendar>
+                    <p-calendar id="dateFin" [(ngModel)]="newProject.dateFin_projet" [showIcon]="true" inputId="icon" [required]="true" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateFin_projet}"></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.dateFin_projet">Date Fin est obligatoire.</small>
+
                 </div>
 
             </div>
@@ -311,14 +324,14 @@
                         </ng-template>
                     </p-dropdown-->
 
-                    <p-dropdown [options]="statuses" [(ngModel)]="newProject.stade" inputId="stade" placeholder="Select" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="stades" [(ngModel)]="newProject.stade" inputId="stade" placeholder="Select" [showClear]="true"></p-dropdown>
 
 
                 </div>
 
                 <div class="field col">
                     <label for="secteur">Secteur</label>
-                    <p-dropdown [options]="statuses" [(ngModel)]="newProject.secteur" inputId="secteur" placeholder="Select" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="secteurs" [(ngModel)]="newProject.secteur" inputId="secteur" placeholder="Select" [showClear]="true"></p-dropdown>
 
                 </div>
                 </div>
@@ -333,8 +346,10 @@
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createProject()"></button>
+                <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createProject()"></button>
+
             </ng-template>
+        <!--/form-->
         </p-dialog>
 
 

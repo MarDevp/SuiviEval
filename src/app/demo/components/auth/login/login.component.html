@@ -5,16 +5,59 @@
             <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
                 <div class="text-center mb-5">
                     <img src="assets/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
+                    <div class="text-900 text-3xl font-medium mb-3">Welcome</div>
                     <span class="text-600 font-medium">Sign in to continue</span>
                 </div>
 
                 <div>
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                    <input id="email1" type="text" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
 
+                    <form
+      *ngIf="!isLoggedIn"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+                    <!--label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label-->
+                    <!--input id="email1" type="text" placeholder="Email address" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem"-->
+                    <div class="form-group">
+                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="username"
+                          [(ngModel)]="form.username"
+                          required
+                          #username="ngModel"
+                          [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                          pInputText class="w-full md:w-30rem mb-5" style="padding:1rem"
+                        />
+                        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+                            Username is required!
+                          </div>
+                        </div>
+
+                    <div class="form-group">
                     <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
-                    <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                    <p-password id="password"    class="form-control"
+                    name="password"
+                    [(ngModel)]="form.password"
+                    required
+                    minlength="6"
+                    #password="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && password.errors }" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
+                    
+                    <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+                        <div *ngIf="password.errors['required']">Password is required</div>
+                        <div *ngIf="password.errors['minlength']">
+                          Password must be at least 6 characters
+                        </div>
+                      </div>
+                
+                
+                    </div>
+
 
                     <div class="flex align-items-center justify-content-between mb-5 gap-5">
                         <div class="flex align-items-center">
@@ -23,7 +66,24 @@
                         </div>
                         <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
                     </div>
-                    <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" [routerLink]="['/']"></button>
+                    <button pButton pRipple label="Sign In" class="w-full p-3 text-xl"></button>
+                
+                   
+                    <div class="form-group">
+                        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger" role="alert">
+                          Login failed: {{ errorMessage }}
+                        </div>
+                      </div>
+                
+                
+                
+                </form>
+
+                <div class="alert alert-success" *ngIf="isLoggedIn">
+                    Logged in as {{ roles }}.
+                  </div>
+               
+                
                 </div>
             </div>
         </div>

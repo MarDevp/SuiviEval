@@ -13,7 +13,7 @@ export class ProjectCNI{
         id_theme_projet ?: number;
         maitre_oeuvre ?: string;
         maitre_ouvrage ?: string;
-        monnaie_projet ?: number;
+        monnaie_projet ?: string;
         taux_rent_eco ?: number;
         cout_total  ?: number;
         taux_rent_interneInit ?: number;

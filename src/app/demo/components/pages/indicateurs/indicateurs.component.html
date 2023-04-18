@@ -1,0 +1,245 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            
+        
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    
+                   
+                    <div class="my-2 float-right">
+                        <button pButton pRipple label="Ajouter Indicateur" icon="pi pi-plus" class="p-button-success mr-2"></button>
+                    </div>
+                   
+            </ng-template>
+            </p-toolbar>
+
+
+
+<!-- 
+            <p-table #dt [value]="projetsCNI" [columns]="cols" responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Listes de  projets</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                    
+                        <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="intitule">Intitulé <p-sortIcon field="intitule"></p-sortIcon></th>
+                        <th pSortableColumn="maitre_oeuvre">Maître d'oeuvre<p-sortIcon field="maitre_oeuvre"></p-sortIcon></th>
+                        <th pSortableColumn="maitre_ouvrage">Maître d'ouvrage<p-sortIcon field="maitre_ouvrage"></p-sortIcon></th>
+
+
+                        <th pSortableColumn="cout_total">Coût Total(TND) <p-sortIcon field="cout_total"></p-sortIcon></th>
+                        <th pSortableColumn="dateDeb">Date Début<p-sortIcon field="dateDeb"></p-sortIcon></th>
+                        <th pSortableColumn="dateFin">Date Fin<p-sortIcon field="dateFin"></p-sortIcon></th>
+
+                        <th pSortableColumn="secteur">Secteur <p-sortIcon field="secteur"></p-sortIcon></th>
+                        <th pSortableColumn="stade">Stade <p-sortIcon field="stade"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+
+
+
+                
+                <ng-template pTemplate="body" let-projectcni >
+                    <tr>
+                  
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{projectcni.code_projet }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{projectcni.intitule_projet}}
+                        </td>
+                 
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Price</span>
+                            {{projectcni.maitre_oeuvre}}
+                        </td>
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{projectcni.maitre_ouvrage}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{projectcni.cout_total}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Name</span>
+                            {{projectcni.dateDeb_projet }}
+                        </td>
+
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{projectcni.dateFin_projet}}
+                        </td>
+
+
+                    
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{projectcni.secteur}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Category</span>
+                            {{projectcni.stade}}
+                        </td>
+
+                  
+                  
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProject(projectcni)" ></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProject(projectcni.id_projet)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table> -->
+
+
+
+        
+        
+        </div>
+    
+    <!--MODAL AJOUT INDICATEUR -->
+
+
+    <!-- MODAL ajout indicateur  -->
+    <!-- <p-dialog [(visible)]="IndicateurDialog" [style]="{width: '800px'}" header="Ajouter Indicateur" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            
+           
+            
+            <div class="formgrid grid">
+            
+
+                <div class="field col">
+                    <label for="libele_indicateur">Libelé</label>
+                    <input type="text" id="libele_indicateur" pInputText [(ngModel)]="newIndicateur.libele_indicateur" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.libele_indicateur}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.libele_indicateur">Ce champs est obligatoire</small>
+                </div>
+
+
+                <div class="field col">
+                    <label for="format_indicateur">Format</label>
+                    <input type="text"  id="format_indicateur" pInputText  [(ngModel)]="newIndicateur.format_indicateur" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.format_indicateur}" >
+                  <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.format_indicateur">Maître d'oeuvre est obligatoire.</small>
+                 </div>
+                 
+
+                <div class="field col">
+                    <label for="uniteMes_indicateur">Unité mesure</label>
+                    <input type="text"  id="uniteMes_indicateur" pInputText [(ngModel)]="newIndicateur.uniteMes_indicateur" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.uniteMes_indicateur}" />
+                   <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.uniteMes_indicateur">Maître d'ouvrage est obligatoire.</small>
+                </div>
+           
+            </div>
+        
+
+            <div class="field">
+                <label for="description_indicateur">Description</label>
+                <textarea id="description_indicateur" pInputText   [(ngModel)]="newIndicateur.description_indicateur"  rows="3" cols="20"></textarea>
+            </div>
+
+
+            <div class="formgrid grid">
+            <div class="field col">
+                <label for="valeurInitiale_indicateur">Valeur Initiale</label>
+                <input type="text"  id="valeurInitiale_indicateur" pInputText [(ngModel)]="newIndicateur.valeurInitiale_indicateur" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.valeurInitiale_indicateur}" />
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.valeurInitiale_indicateur">Maître d'ouvrage est obligatoire.</small>
+            </div>
+
+
+            <div class="field col">
+                <label for="taux_rent_eco">Valeur Cible</label>
+                <input type="text" pInputText id="taux_rent_eco" [(ngModel)]="newProject.taux_rent_eco"/>
+            </div>
+
+
+            <div class="field col">
+                <label for="taux_rent_interneInit">Taux Rentabilité Interne initial</label>
+                <input  type="text" pInputText id="taux_rent_interneInit" [(ngModel)]="newProject.taux_rent_interneInit"/>
+            </div>
+
+            </div>
+
+
+            <div class="formgrid grid">
+              
+                <div class="field col">
+                    <label for="cout_total">Coût Total (TND)</label>
+                    <input  type="text" pInputText id="cout_total" [(ngModel)]="newProject.cout_total" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.cout_total}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.cout_total">Coût Total est obligatoire.</small>
+
+                </div>
+        
+
+            <div class="field col">
+                <label for="dateDeb">Date Début</label>
+                <p-calendar [required]="true" id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateDeb_projet}" ></p-calendar>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.dateDeb_projet">Date Début est obligatoire.</small>
+
+            </div>
+
+            <div class="field col">
+                <label for="dateFin">Date Fin</label>
+                <p-calendar id="dateFin" [(ngModel)]="newProject.dateFin_projet" [showIcon]="true" inputId="icon" [required]="true" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateFin_projet}"></p-calendar>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.dateFin_projet">Date Fin est obligatoire.</small>
+
+            </div>
+
+        </div>
+
+        
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="stade">Stade</label>
+        
+
+                <p-dropdown [options]="stades" [(ngModel)]="newProject.stade" inputId="stade" placeholder="Select" [showClear]="true"></p-dropdown>
+
+
+            </div>
+
+            <div class="field col">
+                <label for="secteur">Secteur</label>
+                <p-dropdown [options]="secteurs" [(ngModel)]="newProject.secteur" inputId="secteur" placeholder="Select" [showClear]="true"></p-dropdown>
+
+            </div>
+            </div>
+
+
+            <div class="field">
+                <label for="observations">Observations</label>
+                <textarea id="observations" pInputTextarea [(ngModel)]="newProject.observations" required rows="3" cols="20"></textarea>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createProject()"></button>
+
+        </ng-template> -->
+    <!--/form-->
+    <!-- </p-dialog> -->
+
+

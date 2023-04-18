@@ -1,0 +1,209 @@
+<div class="grid">
+  <div class="col-12">
+    
+      <div class="card">
+          <h4>Cadre logique</h4>
+ 
+        
+          <div class="d-flex justify-content-end">
+              <p-dropdown placeholder="Selectionnez un projet" [showClear]="true"></p-dropdown>
+              <!--button pButton label="Creez un nouvel indicateur" icon="pi pi-plus" class="p-button-success ml-2"></button-->
+            </div>
+    
+      </div>
+  </div>
+
+
+
+  <div class="col-12">
+    <p-card>
+          
+          <ng-template pTemplate="title" >
+              <div class="flex flex-wrap gap-2 justify-content-end" >
+                  <button pButton pRipple type="button" label="Objectif"  icon="pi pi-plus" class="p-button-outlined p-button-info" (click)="openNewObjGlobal()"></button>
+                  <button pButton pRipple type="button" icon="pi pi-plus" label="Resulat attendu" class="p-button-outlined p-button-help" (click)="openNewResultatAtt()"></button>
+                  
+              </div>
+          </ng-template>
+    
+          
+    
+            
+          <!--card body-->
+      <div>
+      
+            <p-table>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Nom</th>
+                  <th>Format</th>
+                  <th>Fréquence</th>
+                  <th>Statut</th>
+                  <th>Réel vs Cible</th>
+                  <th>Actions</th>
+
+                </tr>
+              </ng-template>
+            </p-table>
+          
+            <p-toolbar styleClass="mb-4">
+              <div class="grid">
+                <div class="col-4">
+                  <h6>Obj. Global</h6>
+                </div>
+                <div class="col-8">
+                  <h6>Libellé objectif + description</h6>
+                </div>
+              </div>
+            </p-toolbar>
+      
+      
+      <!--les indicateurs du obj. global -->
+            
+      <p-table [value]="data">
+
+  
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{row.nom}}</td>
+            <td>{{row.format}}</td>
+            <td>{{row.frequence}}</td>
+            <td>{{row.statut}}</td>
+            <td>{{row.reelVsCible}}</td>
+            <td>
+              <div class="flex">
+                <button pButton pRipple type="button" icon="pi pi-file-edit" class="p-button-rounded p-button-help"></button>
+                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+              </div>
+          </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+      
+   
+            <p-toolbar styleClass="mb-4">
+              <div class="grid">
+                <div class="col-4">
+                  <h6>Obj. Spécifique</h6>
+                </div>
+                <div class="col-8">
+                  <h6>Libellé objectif + description</h6>
+                </div>
+              </div>
+            </p-toolbar>
+      
+      
+      
+      
+      
+          </div>
+          
+         
+     
+   </p-card>
+ </div>
+
+
+ <!--MODAL    --> 
+ <p-dialog [(visible)]="objGlobalDialog" [style]="{width: '800px'}" header="Ajouter un objectif" [modal]="true" class="p-fluid">
+  <ng-template pTemplate="content">
+
+    <div class="formgrid grid">
+      <!--div class="field col">
+          <label for="code">Code</label-->
+              <!--input type="text" id"code" pInputText placeholder="code" [disabled]="true"/>
+      </div-->
+
+      <div class="field col">
+      <div  style="display: flex; justify-content: space-between;">
+        <div class="field-checkbox" style="display: flex; align-items: center;">
+          <label for="ny" style="margin-right: 10px;">Objectif Global</label>
+          <p-checkbox name="group1" value="global" id="ny"></p-checkbox>
+        </div>
+      </div>
+    </div>
+      
+      
+
+      <div class="field col-12">
+          <label for="libele">Libele</label>
+          <input type="text" id="libele" pInputText [(ngModel)]="newObjectif.libele_objectif" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedObjGlobal && !newObjectif.libele_objectif}"/>
+              <small class="ng-dirty ng-invalid" *ngIf="submittedObjGlobal && !newObjectif.libele_objectif">Ce champs est obligatoire</small>
+      </div>
+
+      <input type="hidden" id="nature_objectif" name="nature_objectif" [(ngModel)]="newObjectif.nature_objectif" value="global">
+
+
+   
+
+      <div class="field col-12">
+        <label for="description">Description</label>
+        <textarea id="description" pInputText   [(ngModel)]="newObjectif.description_objectif"  rows="3" cols="20"></textarea>
+      </div>
+
+
+    </div> <!--end formgrid-->
+
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideobjGloablDialog()"></button>
+    <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createObjGlobal()"></button>
+
+</ng-template>
+</p-dialog>
+
+
+
+<!--FIN MODAL-->
+
+
+<!--MODAL Resultat attendu --> 
+<p-dialog [(visible)]="resultatAttDialog" [style]="{width: '800px'}" header="Ajouter un resultat attendu" [modal]="true" class="p-fluid">
+  <ng-template pTemplate="content">
+
+    <div class="formgrid grid">
+    
+
+      <div class="field col-12">
+          <label for="libele">Libele Resultat attendu</label>
+          <input type="text" id="libele" pInputText [(ngModel)]="newObjectif.libele_objectif" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedObjGlobal && !newObjectif.libele_objectif}"/>
+              <small class="ng-dirty ng-invalid" *ngIf="submittedObjGlobal && !newObjectif.libele_objectif">Ce champs est obligatoire</small>
+      </div>
+
+      <input type="hidden" id="nature_objectif" name="nature_objectif"  value="global">
+
+
+   
+
+      <div class="field col-12">
+        <label for="description">Description Resultat attendu</label>
+        <textarea id="description" pInputText  rows="3" cols="20"></textarea>
+      </div>
+
+      <div class="field col-12">
+        <label for="description">Objectif associé</label>
+        <p-dropdown placeholder="Selectionnez un objectif" [showClear]="true"></p-dropdown>
+
+      </div>
+
+
+    </div> <!--end formgrid-->
+
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideResultatAttDialog()"></button>
+    <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+
+</ng-template>
+</p-dialog>
+
+<!--FIN MODAL-->
+
+ 
+ 
+</div>
