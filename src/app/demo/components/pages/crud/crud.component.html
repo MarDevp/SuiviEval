@@ -2,23 +2,7 @@
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    
-                   
-                    <div class="my-2 float-right">
-                        <button pButton pRipple label="Ajout Projet" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <!--button pButton pRipple label="Supprimer  projet" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProjects()" [disabled]="!selectedProjects || !selectedProjects.length"></button-->
-                 
-                </div>
-                   
-                </ng-template>
-
-                <!--ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
-                </ng-template-->
-            </p-toolbar>
+       
 
 
             <!--        Liste de projets           -->
@@ -116,7 +100,7 @@
                         <h5 class="m-0">Listes de  projets</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, projetsCNI.intitule_projet)" placeholder="Search..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -203,7 +187,7 @@
                         <td>
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProject(projectcni)" ></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProject(projectcni.id_projet)"></button>
+                                <!--button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProject(projectcni.id_projet)"></button-->
                             </div>
                         </td>
                     </tr>
@@ -297,7 +281,7 @@
                 <div class="field col">
                     <label for="dateDeb">Date Début</label>
                     <!--p-inputNumber id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" mode="currency" currency="USD" locale="en-US"></p-inputNumber-->
-                    <p-calendar [required]="true" id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateDeb_projet}" ></p-calendar>
+                    <p-calendar disabled [required]="true" id="dateDeb" [(ngModel)]="newProject.dateDeb_projet" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newProject.dateDeb_projet}" ></p-calendar>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !newProject.dateDeb_projet">Date Début est obligatoire.</small>
 
                 </div>

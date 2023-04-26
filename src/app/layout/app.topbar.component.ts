@@ -43,6 +43,8 @@ export class AppTopBarComponent {
             console.log(err);
           }
         });
+
+        this.router.navigate(['/auth/login'])
 }
 
 }

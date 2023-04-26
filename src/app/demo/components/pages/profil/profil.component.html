@@ -1,21 +1,97 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
-    <header class="jumbotron">
-      <h3>
-        <strong>{{ currentUser.username }}</strong> Profile
-      </h3>
-    </header>
-    <p>
-      <strong>Email:</strong>
-      {{ currentUser.email }}
-    </p>
-    <strong>Roles:</strong>
-    <ul>
-      <li *ngFor="let role of currentUser.roles">
-        {{ role }}
-      </li>
-    </ul>
+
+<div class="surface-card p-4 shadow-2 border-round w-full lg:w-12">
+  <div class="text-center mb-5">
+      <!--img src="assets/demo/images/blocks/logos/hyper.svg" alt="Image" height="50" class="mb-3"-->
+      <br>
+      <br>
+      <div class="text-900 text-3xl font-medium mb-3">Mon profil</div>
+      <!--span class="text-600 font-medium line-height-3">username</span-->
+      <!--a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a-->
   </div>
+
+  <div>
+      <label for="username" class="block text-900 font-medium mb-2">Username</label>
+      <input id="username" type="text" pInputText class="w-full mb-3" [(ngModel)]="currentUser.username" [disabled]="!editing" >
+
+      <label for="prenom_user" class="block text-900 font-medium mb-2">Prenom</label>
+      <input id="prenom_user" type="text" pInputText class="w-full mb-3" [(ngModel)]="currentUser.prenom_user" [disabled]="!editing" >
+
+      <label for="nom_user" class="block text-900 font-medium mb-2">Nom</label>
+      <input id="nom_user" type="text" pInputText class="w-full mb-3" [(ngModel)]="currentUser.nom_user" [disabled]="!editing" >
+
+    
+      <label for="email" class="block text-900 font-medium mb-2">Email</label>
+      <input id="email" type="text" pInputText class="w-full mb-3" [(ngModel)]="currentUser.email" [disabled]="!editing" >
+
+      <label for="role_user" class="block text-900 font-medium mb-2">Role</label>
+      <input id="role_user" type="text" pInputText class="w-full mb-3" [(ngModel)]="currentUser.role_user" [disabled]="!editing" >
+
+      <div class="grid">
+      
+        <div class="col-12">
+
+      <button pButton pRipple label="Edit Profile"  class="w-full" (click)="editProfile()"></button>
+
+      
+    </div>
+
+    <div class="col-12">
+      <button pButton pRipple label="Save"  class="w-full" *ngIf="editing" (click)="saveProfile()"></button>
+    </div>
+
+
+      </div>
   
-  <ng-template #loggedOut>
-    Please login.
-  </ng-template>
+    </div>
+</div>
+
+
+
+<!--   
+<div class="container" *ngIf="currentUser; else loggedOut">
+  <header class="jumbotron">
+    <h3>
+      <strong>{{ currentUser.username }}</strong> Profile
+    </h3>
+  </header>
+  <p>
+    <strong>Email:</strong>
+    {{ currentUser.email }}
+  </p>
+  <strong>Roles:</strong>
+  <ul>
+    <li *ngFor="let role of currentUser.roles">
+      {{ role }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #loggedOut>
+  Please login.
+</ng-template>
+
+<div class="p-field">
+  <label for="name">Name</label>
+  <input id="name" type="text" [(ngModel)]="name" [disabled]="!editing" />
+</div>
+<div class="p-field">
+  <label for="lastName">Last Name</label>
+  <input id="lastName" type="text" [(ngModel)]="lastName" [disabled]="!editing" />
+</div>
+<div class="p-field">
+  <label for="username">Username</label>
+  <input id="username" type="text" [(ngModel)]="username" [disabled]="!editing" />
+</div>
+<div class="p-field">
+  <label for="email">Email</label>
+  <input id="email" type="email" [(ngModel)]="email" [disabled]="!editing" />
+</div>
+<div class="p-field">
+  <label for="role">Role</label>
+  <input id="role" type="text" [(ngModel)]="role" [disabled]="!editing" />
+</div>
+
+<button (click)="editProfile()">Edit Profile</button>
+
+
+<button *ngIf="editing" (click)="saveProfile()">Save</button> -->

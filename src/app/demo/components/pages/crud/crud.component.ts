@@ -185,8 +185,11 @@ console.log("**************************************")
         return id;
     }
 
-    onGlobalFilter(table: Table, event: Event) {
+   /* onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }*/
+    onGlobalFilter(table: Table, name: string) {
+      table.filterGlobal(name, 'contains');
     }
 
 
@@ -246,7 +249,7 @@ console.log("**************************************")
     console.log("1:newProject.intitule_projet:");
     console.log("start");
     this.saveProject();
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Projet crée', life: 3000 });
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Projet modifié', life: 3000 });
    
     this.projectDialog = false;
             this.project = {};   //??

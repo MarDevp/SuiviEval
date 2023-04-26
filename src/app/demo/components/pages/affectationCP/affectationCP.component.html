@@ -1,8 +1,139 @@
 <div class="grid">
     <div class="col-12">
         <div class="card">
-            <h4>Empty Page</h4>
-            <p>This is your empty page template to start building beautiful applications.</p>
+
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    
+                   
+                    <div class="my-2 float-right">
+                        <button pButton pRipple label="Affecter un Chef Projet" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                 
+                </div>
+                   
+                </ng-template>
+
+            </p-toolbar>
+
+
+
+
+            <p-table #dt [value]="users"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste des Chefs Projet</h5>
+                        <!--span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span-->
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        
+                        <!--th pSortableColumn="username">Nom Utilisateur<p-sortIcon field="username"></p-sortIcon></th-->
+                        <th pSortableColumn="prenom_user">Prenom<p-sortIcon field="prenom_user"></p-sortIcon></th>
+                        <th pSortableColumn="nom_user">Nom<p-sortIcon field="nom_user"></p-sortIcon></th>
+                        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                        <th pSortableColumn="role_user">Projet<p-sortIcon field="role_user"></p-sortIcon></th>
+                        <th> </th>
+  
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-user >
+                    <tr>
+                    
+
+                        <td style="width:25%; min-width:10rem;"><span class="p-column-title">Prenom</span>
+                            {{user.prenom_user}}
+                        </td>
+
+                        <td style="width:25%; min-width:10rem;">
+                            <span class="p-column-title">Nom</span>
+                            {{user.nom_user}}
+                        </td>
+                 
+                        <td style="width:25%; min-width:8rem;">
+                            <span class="p-column-title">Email</span>
+                            {{user.email}}
+                        </td>
+
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Role</span>
+                            {{user.role_user}}
+                        </td>
+                       
+
+                  
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-warning"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
         </div>
+        
+
+          <!--MODAL    --> 
+          <p-dialog [(visible)]="cpDialog" [style]="{width: '800px'}" header="Affecter Chef Projet" [modal]="true" class="p-fluid">
+            <!--form id="form" role="form" #testForm="ngForm" ngNativeValidate-->
+            <ng-template pTemplate="content">
+                <!--img [src]="'assets/demo/images/product/' + product.image" [alt]="product.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="product.image"-->
+                
+               
+                
+                <div class="formgrid grid">
+                    <!--div class="field col">
+                        <label for="code">Code</label-->
+                            <!--input type="text" id"code" pInputText placeholder="code" [disabled]="true"/>
+                    </div-->
+
+                    <div class="field col">
+                        <label for="username">Nom</label>
+                        <p-autoComplete field="name" [dropdown]="true"></p-autoComplete> 
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !newUser.username">Ce champs est obligatoire.</small>
+
+                    </div>
+
+                    <div class="field col">
+                        <label for="prenom_user">Prénom</label>
+                        <p-autoComplete field="name" [dropdown]="true"></p-autoComplete> 
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !newUser.prenom_user">Ce champs est obligatoire.</small>
+
+                    </div>
+
+                    <div class="field col">
+                        <label for="nom_user">Projet</label>
+                        <p-dropdown inputId="monnaie_projet" placeholder="Select" [showClear]="true"></p-dropdown>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !newUser.nom_user">Ce champs est obligatoire.</small>
+                     </div>
+    
+
+                   
+              
+               
+                </div>
+            
+                <br><br><br>
+
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+
+            </ng-template>
+        <!--/form-->
+        </p-dialog>
+
+
+
+
+
     </div>
 </div>

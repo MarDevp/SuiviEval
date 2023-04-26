@@ -6,8 +6,8 @@
    
           
             <div class="d-flex justify-content-end">
-                <p-dropdown placeholder="Selectionnez un projet" [showClear]="true"></p-dropdown>
-                <button pButton label="Creez un nouvel indicateur" icon="pi pi-plus" class="p-button-success ml-2"></button>
+                <p-dropdown placeholder="Selectionnez un projet" class="mr-2" [showClear]="true"></p-dropdown>
+                <p-dropdown placeholder="Selectionnez un resultat" [showClear]="true"></p-dropdown>
               </div>
       
         </div>
@@ -18,88 +18,123 @@
     <div class="col-12">
       <p-card>
             
-            <ng-template pTemplate="title" >
-                <div class="flex flex-wrap gap-2 justify-content-end" >
-                    <button pButton pRipple type="button" label="Objectif Global"  icon="pi pi-plus" class="p-button-outlined p-button-info"></button>
-                    <button pButton pRipple type="button" label="Objectif Specifique" icon="pi pi-plus"class="p-button-outlined p-button-primary"></button>
-                    <button pButton pRipple type="button" icon="pi pi-plus" label="Resulat attendu" class="p-button-outlined p-button-help"></button>
-                    
-                </div>
-            </ng-template>
-      
-            
-      
+  
+           
+        <ng-template pTemplate="title" >
+          <div class="flex flex-wrap gap-2 justify-content-end" >
+            <div class="my-2 float-right">
+              <button pButton pRipple label="" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+          </div>
               
-            <!--card body-->
-        <div>
-        
-              <p-table>
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th>Nom</th>
-                    <th>Format</th>
-                    <th>Fréquence</th>
-                    <th>Statut</th>
-                    <th>Réel vs Cible</th>
-                    <th>Actions</th>
-  
-                  </tr>
-                </ng-template>
-              </p-table>
-            
-              <p-toolbar styleClass="mb-4">
-                <div class="grid">
-                  <div class="col-4">
-                    <h6>Obj. Global</h6>
-                  </div>
-                  <div class="col-8">
-                    <h6>Libellé objectif + description</h6>
-                  </div>
-                </div>
-              </p-toolbar>
-        
-        
-        <!--les indicateurs du obj. global -->
-              
-        <!--p-table [value]="data">
-  
-    
-          <ng-template pTemplate="body" let-row>
-            <tr>
-              <td>{{row.nom}}</td>
-              <td>{{row.format}}</td>
-              <td>{{row.frequence}}</td>
-              <td>{{row.statut}}</td>
-              <td>{{row.reelVsCible}}</td>
-              <td>
-                <div class="flex">
-                  <button pButton pRipple type="button" icon="pi pi-file-edit" class="p-button-rounded p-button-help"></button>
-                  <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
-                </div>
-            </td>
-            </tr>
-          </ng-template>
-  
-        </p-table-->
-        
-     
-              <p-toolbar styleClass="mb-4">
-                <div class="grid">
-                  <div class="col-4">
-                    <h6>Obj. Spécifique</h6>
-                  </div>
-                  <div class="col-8">
-                    <h6>Libellé objectif + description</h6>
-                  </div>
-                </div>
-              </p-toolbar>
-        
-        
-        
-        
-        
+          </div>
+      </ng-template>
+
+
+      
+      <p-table #dt [value]="activites"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                <h5 class="m-0">Liste des activités</h5>
+                <!--span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                </span-->
             </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                
+
+                <th pSortableColumn="libele_activite">Libele<p-sortIcon field="libele_activite"></p-sortIcon></th>
+                <th pSortableColumn="description_activite">Description<p-sortIcon field="description_activite"></p-sortIcon></th>
+                <th pSortableColumn="id_resultat">Résultat <p-sortIcon field="id_resultat"></p-sortIcon></th>
+
+         
+                <th> Actions </th>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-activite >
+            <tr>
             
+
+
+                <td style="width:25%; min-width:10rem;"><span class="p-column-title">Libele</span>
+                    {{activite.libele_activite}}
+                </td>
+
+                <td style="width:25%; min-width:10rem;">
+                    <span class="p-column-title">Description</span>
+                    {{activite.description_activite}}
+                </td>
+         
+                <td style="width:25%; min-width:8rem;">
+                    <span class="p-column-title">Resultat</span>
+                    {{activite.id_resultat}}
+                </td>
+
+                
+
+          
+                <td>
+                    <div class="flex">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editActivite(activite)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteActivite(activite.id_activite)" ></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+     <!-- MODAL ajout activité  -->
+     <p-dialog [(visible)]="activiteDialog" [style]="{width: '1000px'}" header="Ajouter Activité" [modal]="true" class="p-fluid">
+      <ng-template pTemplate="content">
+          
+         
+          
+          <div class="formgrid grid">
+          
+
+              <div class="field col">
+                  <label for="libele_activite">Libelé</label>
+                  <input type="text" id="libele_activite" pInputText [(ngModel)]="newActivite.libele_activite" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newActivite.libele_activite}"/>
+                      <small class="ng-dirty ng-invalid" *ngIf="submitted && !newActivite.libele_activite">Ce champs est obligatoire</small>
+              </div>
+
+         
+          </div>
+      
+
+          <div class="field">
+              <label for="description_activite">Description</label>
+              <textarea id="description_activite" pInputText   [(ngModel)]="newActivite.description_activite"  rows="3" cols="20"></textarea>
+          </div>
+
+
+          <div class="formgrid grid">
+          <div class="field col">
+              <label for="id_resultat">Résultat</label>
+              <input type="text"  id="id_resultat" pInputText [(ngModel)]="newActivite.id_resultat" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newActivite.id_resultat}" />
+              <small class="ng-dirty ng-invalid" *ngIf="submitted && !newActivite.id_resultat">Ce champs est obligatoire</small>
+          </div>
+
+
+          </div>
+
+      </ng-template>
+      
+
+      <ng-template pTemplate="footer">
+          <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+          <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createActivite()"></button>
+
+      </ng-template>
+
+  </p-dialog>
+              
+
            
        
      </p-card>

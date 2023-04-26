@@ -11,6 +11,8 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
     imports: [
@@ -24,7 +26,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
         TableModule,
         DialogModule,
         InputTextModule,
-        InputTextareaModule
+        InputTextareaModule,
+        FormsModule
 
 
 

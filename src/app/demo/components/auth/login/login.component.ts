@@ -2,6 +2,7 @@ import { Component,OnInit  } from '@angular/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Router } from '@angular/router';
 
 
 
@@ -28,13 +29,15 @@ export class LoginComponent implements OnInit {
     errorMessage = '';
     roles: string[] = [];
   
-    constructor(private authService: AuthService, private storageService: StorageService,public layoutService: LayoutService) { }
+    constructor(private authService: AuthService, private storageService: StorageService,public layoutService: LayoutService , private router:Router) { }
   
     ngOnInit(): void {
       if (this.storageService.isLoggedIn()) {
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;
       }
+
+      console.log("user",this.storageService.getUser());
     }
   
     onSubmit(): void {
@@ -47,7 +50,10 @@ export class LoginComponent implements OnInit {
           this.isLoginFailed = false;
           this.isLoggedIn = true;
           this.roles = this.storageService.getUser().roles;
-          this.reloadPage();
+          /*this.reloadPage();*/
+
+          this.redirect();
+
         },
         error: err => {
           this.errorMessage = err.error.message;
@@ -58,6 +64,11 @@ export class LoginComponent implements OnInit {
   
     reloadPage(): void {
       window.location.reload();
+    }
+
+    redirect(){
+      console.log("msg")
+      this.router.navigate(['../..']);
     }
   }
 

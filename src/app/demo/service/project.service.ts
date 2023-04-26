@@ -80,5 +80,123 @@ export class ProjectService {
 
 
 
+// Gestion des utilisateurs
+
+
+getAllUsers(){
+    return this.http.get(API_projet+'users');
+}
+
+    createUser(  user : Object) : Observable<object>
+    {
+            return this.http.post(API_projet+'createUser',user);
+    }
+
+    deleteUser(  id : number) : Observable<object>
+    {
+        console.log("iiiiddd"+id);
+            return this.http.delete(API_projet+'deleteUser/'+id);
+          
+    }
+
+    /*
+    updateUser(  id : number) : Observable<object>
+    {
+        console.log("ii2"+id);
+            return this.http.put(API_projet+'updateUser/'+id);
+
+
+    }
+    */
+
+
+
+    //fin gestion des utilisateurs 
+
+
+    // Gestion des indicateurs 
+
+    getAllIndicateurs(){
+        return this.http.get(API_projet+'indicateurs');
+    }
+
+    createIndicateur(  indicateur : Object) : Observable<object>
+    {
+            return this.http.post(API_projet+'createIndicateur',indicateur);
+    }
+
+    deleteIndicateur(  id : number) : Observable<object>
+    {
+        console.log("iiiiddd"+id);
+            return this.http.delete(API_projet+'deleteIndicateur/'+id);
+          
+    }
+
+    //fin gestion des indicateurs 
+
+
+
+
+     // Gestion des activtes
+
+     getAllActivites(){
+        return this.http.get(API_projet+'activites');
+    }
+
+    createActivite(  activite : Object) : Observable<object>
+    {
+            return this.http.post(API_projet+'createActivite',activite);
+    }
+
+    deleteActivite(  id : number) : Observable<object>
+    {
+        console.log("iiiiddd"+id);
+            return this.http.delete(API_projet+'deleteActivite/'+id);
+          
+    }
+
+
+     //fin gestion des activites
+
+
+     // Planification des indicateurs
+
+     getAllIndicateurDP(){
+        return this.http.get(API_projet+'indicateurPlan');
+    }
+
+
+    createIndicateurDP(  indicateurDP : Object) : Observable<object>
+    {
+            return this.http.post(API_projet+'createIndicateurPlan',indicateurDP);
+    }
+
+    deleteIndicateurDP(  id : number) : Observable<object>
+    {
+        console.log("iiiiddd"+id);
+            return this.http.delete(API_projet+'deleteIndicateurPlan/'+id);
+          
+    }
+
+
+
+     // Fin planification des indicateurs
+
+
+     // get objectifs by project id
+
+     getObjectifByProjetId(  id : number) : Observable<object>
+     {
+             return this.http.get(API_projet+'objectif_projet/'+id);
+     }
+
+
+
+
+
+
+
+
+    
 
 }
