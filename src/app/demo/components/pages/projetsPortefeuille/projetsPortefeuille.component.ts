@@ -215,10 +215,10 @@ console.log("**************************************")
         this.submitted = true;
 
 
-        if (!this.newProject.intitule_projet ||  !this.newProject.maitre_oeuvre || !this.newProject.maitre_ouvrage || !this.newProject.cout_total || !this.newProject.dateDeb_projet || !this.newProject.dateFin_projet ) {
+       /* if (!this.newProject.intitule_projet ||  !this.newProject.maitre_oeuvre || !this.newProject.maitre_ouvrage || !this.newProject.cout_total || !this.newProject.dateDeb_projet || !this.newProject.dateFin_projet ) {
             this.errorMessage = "Project name is required";
             return; // return without creating a new project if name is not provided
-        }
+        }*/
 
         this.projectservice
         .createProject(this.newProject).subscribe(data => {
@@ -246,7 +246,7 @@ console.log("**************************************")
     console.log("1:newProject.intitule_projet:");
     console.log("start");
     this.saveProject();
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: '', life: 3000 });
+    this.messageService.add({ severity: 'success', summary: 'Projet Ajouté', detail: '', life: 3000 });
    
     this.projectDialog = false;
             this.project = {};   //??

@@ -48,6 +48,7 @@ export class GestionUtilisateursComponent implements OnInit {
 
     
     users:any;
+    x:any;
 
       listOfUsers(): void {
       console.log('liste')
@@ -58,8 +59,17 @@ export class GestionUtilisateursComponent implements OnInit {
         
         console.log("testttttttt liste");
   
+        if( this.users.role_user =="ROLE_MEMBRE")
+        this.x="Membre Projet";
+
+        if( this.users.role_user =="ROLE_ADMIN")
+        this.x="Administrateur";
+
+        if( this.users.role_user =="ROLE_DIRIGEANT")
+        this.x="Dirigeant";
   
         });
+
     }
 
 
@@ -128,9 +138,9 @@ export class GestionUtilisateursComponent implements OnInit {
               this.user = {};   //??
   
       console.log("stop");
-  
-  
+
     }
 
+    
 
   }

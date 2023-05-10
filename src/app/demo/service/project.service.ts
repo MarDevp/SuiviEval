@@ -178,6 +178,17 @@ getAllUsers(){
           
     }
 
+    getIndicateurPlanByIndicateurId(  id : number) : Observable<object>
+    {
+            return this.http.get(API_projet+'indicateurPlanById_indicateur/'+id);
+    }
+
+    updateValeurSuiviIndicateur(  id : number , valeurReele: number,dateSaisie:String) : Observable<object>
+    {
+        const body = { valeurReele, dateSaisie };
+        return this.http.put(API_projet+'updateIndicateurDPValeur_reele/'+id,body);
+    }
+    
 
 
      // Fin planification des indicateurs
@@ -190,13 +201,77 @@ getAllUsers(){
              return this.http.get(API_projet+'objectif_projet/'+id);
      }
 
+       // get resultat by project id
+
+       getResultatByProjetId(  id : number) : Observable<object>
+       {
+               return this.http.get(API_projet+'resultat_projet/'+id);
+       }
 
 
+     // get indicators d'objectifs ( tous les indicateurs ) by project id 
 
 
+     getIndicateursObjectifByProjetId(  id : number) : Observable<object>
+     {
+             return this.http.get(API_projet+'indicateur_objectif_projet/'+id);
+     }
 
 
+         // get indicators de resultat by project id 
+
+
+         getIndicateursResultatByProjetId(  id : number) : Observable<object>
+         {
+                 return this.http.get(API_projet+'indicateur_resultat_projet/'+id);
+         }
+    
+
+
+    // get objectif by id 
+
+    getObjectifById(  id : number) : Observable<object>
+      {
+        return this.http.get(API_projet+'objectif/'+id);
+     }
+
+     // get juste objectifs by projet_id
+
+     getObjectiffByProjetId(  id : number) : Observable<object>
+     {
+       return this.http.get(API_projet+'objectif_projet/'+id);
+    }
 
     
+    // get indicateurs by objectif_id
+
+    getIndicateursByObjectifId(  id : number) : Observable<object>
+    {
+      return this.http.get(API_projet+'indicateurByObjectifId/'+id);
+   }
+
+
+   // nombre d'objectifs par projet id 
+
+   getNombreObjectifsByProjetId(  id : number) : Observable<object>
+   {
+     return this.http.get(API_projet+'count_objectif_projet/'+id);
+  }
+
+
+  // nombre de resultats attendus par projets id 
+
+  getNombreResultatsByProjetId(  id : number) : Observable<object>
+  {
+    return this.http.get(API_projet+'count_resultat_projet/'+id);
+ }
+
+  // nombre des indicateurs par projet_id
+
+  getNombreIndicateursByProjetId(  id : number) : Observable<object>
+  {
+    return this.http.get(API_projet+'countIndicateurByProjetId/'+id);
+ }
+
 
 }

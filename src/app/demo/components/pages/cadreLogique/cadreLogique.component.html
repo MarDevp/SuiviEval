@@ -5,104 +5,80 @@
           <h4>Cadre logique</h4>
  
         
-          <div class="d-flex justify-content-end">
-              <p-dropdown placeholder="Selectionnez un projet" [showClear]="true"></p-dropdown>
-              <!--button pButton label="Creez un nouvel indicateur" icon="pi pi-plus" class="p-button-success ml-2"></button-->
-            </div>
-    
-      </div>
-  </div>
+          <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                
+                <p-dropdown [options]="projects" [(ngModel)]="selectedProject" optionLabel="intitule_projet" placeholder="Selectionnez un projet" class="mr-2" [showClear]="false"  value="intitule_projet" (onChange)="getSelectedProject($event)"></p-dropdown>
 
-
-
-  <div class="col-12">
-    <p-card>
-          
-          <ng-template pTemplate="title" >
-              <div class="flex flex-wrap gap-2 justify-content-end" >
-                  <button pButton pRipple type="button" label="Objectif"  icon="pi pi-plus" class="p-button-outlined p-button-info" (click)="openNewObjGlobal()"></button>
-                  <button pButton pRipple type="button" icon="pi pi-plus" label="Resulat attendu" class="p-button-outlined p-button-help" (click)="openNewResultatAtt()"></button>
-                  
-              </div>
-          </ng-template>
-    
-          
-    
-            
-          <!--card body-->
-      <div>
-      
-            <p-table>
-              <ng-template pTemplate="header">
-                <tr>
-                  <th>Nom</th>
-                  <th>Format</th>
-                  <th>Fréquence</th>
-                  <th>Statut</th>
-                  <th>Réel vs Cible</th>
-                  <th>Actions</th>
-
-                </tr>
-              </ng-template>
-            </p-table>
-          
-            <p-toolbar styleClass="mb-4">
-              <div class="grid">
-                <div class="col-4">
-                  <h6>Obj. Global</h6>
-                </div>
-                <div class="col-8">
-                  <h6>Libellé objectif + description</h6>
-                </div>
-              </div>
-            </p-toolbar>
-      
-      
-      <!--les indicateurs du obj. global -->
-            
-      <p-table [value]="data">
-
-  
-        <ng-template pTemplate="body" let-row>
-          <tr>
-            <td>{{row.nom}}</td>
-            <td>{{row.format}}</td>
-            <td>{{row.frequence}}</td>
-            <td>{{row.statut}}</td>
-            <td>{{row.reelVsCible}}</td>
-            <td>
-              <div class="flex">
-                <button pButton pRipple type="button" icon="pi pi-file-edit" class="p-button-rounded p-button-help mr-2"></button>
-                <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
-              </div>
-          </td>
-          </tr>
         </ng-template>
+        </p-toolbar>
+    
 
-      </p-table>
-      
-   
-            <p-toolbar styleClass="mb-4">
-              <div class="grid">
-                <div class="col-4">
-                  <h6>Obj. Spécifique</h6>
+
+  <p-table [value]="objectifsAndIndi" dataKey="name" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 5rem"></th>
+            <th pSortableColumn="name">Libele<p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="price">Description<p-sortIcon field="price"></p-sortIcon></th>
+  
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-objectif let-expanded="expanded">
+        <tr>
+            <td>
+                <button type="button" pButton pRipple [pRowToggler]="objectif" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{ objectif.objectif.libeleObjectif }}</td>
+            <td>{{ objectif.objectif.descriptionObjectif}}</td>
+
+           
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-objectif>
+        <tr>
+            <td colspan="7">
+                <div class="p-3">
+                    <p-table  [value]="objectif.ee" dataKey="id">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="id">libele Indicateur<p-sortIcon field="price"></p-sortIcon></th>
+                                <th pSortableColumn="customer">Description<p-sortIcon field="customer"></p-sortIcon></th>
+                                <th pSortableColumn="date">Date Prévue Réalisation<p-sortIcon field="date"></p-sortIcon></th>
+                                <th pSortableColumn="amount">Valeur Départ<p-sortIcon field="amount"></p-sortIcon></th>
+                                <th pSortableColumn="status">Valeur Cible<p-sortIcon field="status"></p-sortIcon></th>
+                                <th pSortableColumn="status">Moyen Vérification<p-sortIcon field="status"></p-sortIcon></th>
+
+                                <th style="width: 4rem"></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-indicateur>
+                            <tr>
+                                <td>{{ indicateur.libele_indicateur }}</td>
+                                <td>{{ indicateur.description_indicateur }}</td>
+                                <td>{{ indicateur.date_prevu_realisation_indicateur }}</td>
+                                <td>{{ indicateur.valeur_initiale_indicateur }}</td>
+                                <td>{{ indicateur.valeur_cible_indicateur }}</td>
+                                <td>{{ indicateur.moyen_verification_indicateur }}</td>
+                                <!--td>
+                                    <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)"></p-tag>
+                                </td-->
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6">There are no order for this product yet.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
-                <div class="col-8">
-                  <h6>Libellé objectif + description</h6>
-                </div>
-              </div>
-            </p-toolbar>
-      
-      
-      
-      
-      
-          </div>
-          
-         
-     
-   </p-card>
- </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+</div>
+</div>
 
 
  <!--MODAL    --> 

@@ -5,6 +5,7 @@ export class Objectif{
     description_objectif ?: string;
     id_projet ?: number;
     nature_objectif ?: string;
+    
 
 constructor(){}
 

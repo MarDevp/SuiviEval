@@ -16,10 +16,10 @@
             </p-toolbar>
 
 
-            <p-table #dt [value]="indicateurs"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="indicObjectif"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Liste des indicateurs</h5>
+                        <h5 class="m-0">Liste des indicateurs d'Objectifs</h5>
                         <!--span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
@@ -36,6 +36,8 @@
                         <th pSortableColumn="unite_mes_indicateur">Unité <p-sortIcon field="unite_mes_indicateur"></p-sortIcon></th>
 
                         <th pSortableColumn="objres">Nature<p-sortIcon field="objres"></p-sortIcon></th>
+                        <th pSortableColumn="id_objres">Libele Objectif<p-sortIcon field="id_objres"></p-sortIcon></th>
+
                         <!--th pSortableColumn="tendance_souhaite_hausse">Tendance souahitée<p-sortIcon field="tendance_souhaite_hausse"></p-sortIcon></th>
                         <th pSortableColumn="Associe">Associé<p-sortIcon field="Associe"></p-sortIcon></th-->
 
@@ -77,6 +79,123 @@
                             {{indicateur.objres}}
                         </td>
 
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Libele Objectif</span>
+                            {{ indicateur.objectif.libele_objectif}}
+                        </td>
+
+                    
+                 
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Valeur Départ</span>
+                            {{indicateur.valeur_initiale_indicateur}}
+                        </td>
+
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Valeur Cible</span>
+                            {{indicateur.valeur_cible_indicateur}}
+                        </td>
+
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Date Prevu Realisation</span>
+                            {{indicateur.date_prevu_realisation_indicateur}}
+                        </td>
+
+
+                          
+                       <td>
+                        <div class="flex">
+                            <button pButton pRipple type="button" label="Plan" class="p-button-outlined mr-2" (click)="openNewDP() ; IndicateurPlanByIndicateurId(indicateur.id_indicateur)"></button>
+                            <button pButton pRipple type="button" label="Suivi" class="p-button-outlined p-button-success" (click)="openNewSV() ; IndicateurPlanByIndicateurId(indicateur.id_indicateur)"></button>
+                        </div>
+                       </td>
+
+                  
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editIndicateur(indicateur)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteIndicateur(indicateur.id_indicateur)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        
+        
+        </div>
+
+
+        <div class="card">
+
+            
+            <p-table #dt [value]="indicResultat"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste des indicateurs de Résultats</h5>
+                        <!--span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span-->
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        
+
+                        <th pSortableColumn="libele_indicateur">Libele<p-sortIcon field="libele_indicateur"></p-sortIcon></th>
+                        <th pSortableColumn="description_indicateur">Description<p-sortIcon field="description_indicateur"></p-sortIcon></th>
+                        <th pSortableColumn="format_indicateur">Format <p-sortIcon field="format_indicateur"></p-sortIcon></th>
+                        <th pSortableColumn="unite_mes_indicateur">Unité <p-sortIcon field="unite_mes_indicateur"></p-sortIcon></th>
+
+                        <th pSortableColumn="objres">Nature<p-sortIcon field="objres"></p-sortIcon></th>
+                        <th pSortableColumn="id_objres">Libele Résultat<p-sortIcon field="id_objres"></p-sortIcon></th>
+
+                        <!--th pSortableColumn="tendance_souhaite_hausse">Tendance souahitée<p-sortIcon field="tendance_souhaite_hausse"></p-sortIcon></th>
+                        <th pSortableColumn="Associe">Associé<p-sortIcon field="Associe"></p-sortIcon></th-->
+
+                        <th pSortableColumn="valeur_initiale_indicateur">Valeur Départ<p-sortIcon field="valeur_initiale_indicateur"></p-sortIcon></th>
+                        <th pSortableColumn="valeur_cible_indicateur">Valeur Cible<p-sortIcon field="valeur_cible_indicateur"></p-sortIcon></th>
+                        <th pSortableColumn="date_prevu_realisation_indicateur">Date Prevu Realisation<p-sortIcon field="date_prevu_realisation_indicateur"></p-sortIcon></th>
+                        <th>Suivi</th>
+                        <th> </th>
+  
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-indicateur >
+                    <tr>
+                    
+
+
+                        <td style="width:20%; min-width:10rem;"><span class="p-column-title">Libele</span>
+                            {{indicateur.libele_indicateur}}
+                        </td>
+
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Description</span>
+                            {{indicateur.description_indicateur}}
+                        </td>
+                 
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Format</span>
+                            {{indicateur.format_indicateur}}
+                        </td>
+
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Unite</span>
+                            {{indicateur.unite_mes_indicateur}}
+                        </td>
+
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Nature</span>
+                            {{indicateur.objres}}
+                        </td>
+
+                        <td style="width:20%; min-width:8rem;">
+                            <span class="p-column-title">Libele Résultat</span>
+                            {{indicateur.id_objres}}
+                        </td>
+
                     
                  
                         <td style="width:20%; min-width:8rem;">
@@ -114,10 +233,7 @@
                 </ng-template>
             </p-table>
         
-        
         </div>
-
-
 
 
     <!-- MODAL ajout indicateur  -->
@@ -194,16 +310,24 @@
             </div>
 
 
-            <div class="field col" >
-                <label for="id_objres">Objectif / Résultat</label>
-                <p-dropdown id="id_objres"  [options]="objresLibea" optionValue="id_objectif" [(ngModel)]="newIndicateur.id_objres" optionLabel="libele_objectif"  class="mr-2" [showClear]="false" ></p-dropdown>
+            <div class="field col"  *ngIf="selectedNature==1">
+                <label for="id_objres">Objectif</label>
+          
+                <p-dropdown id="id_objres"  [options]="objresLibea" optionValue="id_objectif" [(ngModel)]="newIndicateur.id_objres" optionLabel="libele_objectif"  class="mr-2" [showClear]="false"  (onChange)="getSelectedObjectif($event)" ></p-dropdown>
 
                 <!--input type="text"   id="id_objres" pInputText [(ngModel)]="newIndicateur.id_objres" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.id_objres}"/-->
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.id_objres">Ce champs est obligatoire</small>
             </div>
 
 
+            <div class="field col"  *ngIf="selectedNature==2">
+                <label for="id_objres">Resultat</label>
+          
+                <p-dropdown id="id_objres"  [options]="objresLibea0" optionValue="id_objectif" [(ngModel)]="newIndicateur.id_objres" optionLabel="libele_objectif"  class="mr-2" [showClear]="false"  (onChange)="getSelectedObjectif($event)" ></p-dropdown>
 
+                <!--input type="text"   id="id_objres" pInputText [(ngModel)]="newIndicateur.id_objres" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !newIndicateur.id_objres}"/-->
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !newIndicateur.id_objres">Ce champs est obligatoire</small>
+            </div>
 
 
 
@@ -234,93 +358,111 @@
 
      <!-- MODAL ajout date plan   -->
      <p-dialog [(visible)]="indicateurDPDialog" [style]="{width: '1000px'}" header="Créer un Plan" [modal]="true" class="p-fluid">
+      
         <ng-template pTemplate="content">
             
             <div class="formgrid grid">
 
-                <div class="field col-2 mr-10">
 
-                <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-success mr-2"></button>
+                <div class="field col">
+                    <label></label>
+
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+                    <label></label>
+
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+
+                    <label></label>
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+                <button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-primary mr-6" (click)="addInputLine()"></button>
                     <br> <br>
                 </div>
 
             </div>
             
-            <div class="formgrid grid">
-            
-  
-                <div class="field col">
-                    <label for="libele_DP">Libelé Date</label>
-                    <input type="text" id="libele_DP" pInputText [(ngModel)]="newIndicateurDP.libele_DP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.libele_DP}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.libele_DP">Ce champs est obligatoire</small>
-                </div>
 
+            <!--le plan deja etetabli -->
+            <div *ngFor="let line of arrayIndicateurPlan; let i = index">
+                <div class="formgrid grid">
 
-
-                <div class="field col">
-                    <label for="date_planification">Date Plan</label>
-                    <p-calendar [required]="true" id="date_planification" [(ngModel)]="newIndicateurDP.date_planification" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.date_planification}" ></p-calendar>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.date_planification">Ce champs est obligatoire</small>
-                </div>
-
-
-                <div class="field col">
-                    <label for="valeur_cible_date">valeur Cible</label>
-                    <input type="text" id="valeur_cible_date" pInputText [(ngModel)]="newIndicateurDP.valeur_cible_date" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.valeur_cible_date}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.valeur_cible_date">Ce champs est obligatoire</small>
-                </div>
-
-
-                <div class="field col">
+                  <div class="field col">
+                    <label for="libele_DP{{i}}">Libelé Date</label>
+                    <input disabled type="text" id="libele_DP{{i}}" pInputText [(ngModel)]="line.libele_DP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.libele_DP}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.libele_DP">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
+                    <label for="date_planification{{i}}">Date Plan</label>
+                    <input disabled type="text" id="date_planification{{i}}" pInputText [(ngModel)]="line.date_planification"  inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.date_planification}" >
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.date_planification">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
+                    <label for="valeur_cible_date{{i}}">valeur Cible</label>
+                    <input disabled type="text" id="valeur_cible_date{{i}}" pInputText [(ngModel)]="line.valeur_cible_date" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.valeur_cible_date}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.valeur_cible_date">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
                     <label><br></label>
-
-                    <button pButton pRipple type="button" label="Editer" class="p-button-warning p-button-text"></button>
+                    <div class="d-flex justify-content-end">
+                    <button pButton pRipple type="button" label="Editer" class="p-button-primary p-button-text mr-2  field col"></button>
+                    <button pButton pRipple type="button" label="Supprimer" class="p-button-danger p-button-text field col" (click)="deleteDatePlanInd(line.id_date_prevue)"></button>
+                    </div>
+                  </div>
                 </div>
-  
-           
-            </div>
+
+              </div>
+
+
+
+              <!-- pour le bouton ajout , eli baad bech yethatou les donnees fel create indicateur plan-->
+
+              <div *ngFor="let ligne of inputLines; let i = index">
+                <div class="formgrid grid">
+
+                  <div class="field col">
+                    <label for="libele_DP{{i}}">Libelé Date</label>
+                    <input type="text" id="libele_DP{{i}}" pInputText [(ngModel)]="ligne.libele_DP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !ligne.libele_DP}"/>
+                  </div>
+              
+                  <div class="field col">
+                    <label for="date_planification{{i}}">Date Plan</label>
+                    <input type="text" id="date_planification{{i}}" pInputText [(ngModel)]="ligne.date_planification"  inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !ligne.date_planification}" >
+                  </div>
+              
+                  <div class="field col">
+                    <label for="valeur_cible_date{{i}}">valeur Cible</label>
+                    <input type="text" id="valeur_cible_date{{i}}" pInputText [(ngModel)]="ligne.valeur_cible_date" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !ligne.valeur_cible_date}"/>
+                  </div>
+              
+                  <div class="field col">
+                    <label><br></label>
+                    <div class="d-flex justify-content-end">
+                    <button pButton pRipple type="button" label="Enregistrer" class="p-button-primary p-button-text mr-2" (click)="saveLigneIndicateurDP()"></button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+                            
         
-            <div class="formgrid grid">
-            
-  
-                <div class="field col">
-                    <label for="libele_DP">Libelé Date</label>
-                    <input type="text" id="libele_DP" pInputText [(ngModel)]="newIndicateurDP.libele_DP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.libele_DP}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.libele_DP">Ce champs est obligatoire</small>
-                </div>
-
-
-
-                <div class="field col">
-                    <label for="date_planification">Date Plan</label>
-                    <p-calendar [required]="true" id="date_planification" [(ngModel)]="newIndicateurDP.date_planification" [showIcon]="true" inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.date_planification}" ></p-calendar>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.date_planification">Ce champs est obligatoire</small>
-                </div>
-
-
-                <div class="field col">
-                    <label for="valeur_cible_date">valeur Cible</label>
-                    <input type="text" id="valeur_cible_date" pInputText [(ngModel)]="newIndicateurDP.valeur_cible_date" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !newIndicateurDP.valeur_cible_date}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !newIndicateurDP.valeur_cible_date">Ce champs est obligatoire</small>
-                </div>
-
-
-                <div class="field col">
-                    <label><br></label>
-
-                    <button pButton pRipple type="button" label="Editer" class="p-button-warning p-button-text"></button>
-                </div>
-  
-           
-            </div>
-  
   
         </ng-template>
         
   
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogDP()"></button>
-            <button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createIndicateurDP()"></button>
+            <button pButton pRipple label="Fermer" icon="pi pi-times" class="p-button-text" (click)="hideDialogDP()"></button>
+            <!--button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createIndicateurDP()"></button-->
   
         </ng-template>
   
@@ -328,7 +470,89 @@
 
 
 
+    <!-- MODAL SUIVI INDICATEUR  -->
+    <p-dialog [(visible)]="indicateurSVDialog" [style]="{width: '1000px'}" header="Suivi" [modal]="true" class="p-fluid">
+      
+        <ng-template pTemplate="content">
+            
+            <div class="formgrid grid">
 
+
+                <div class="field col">
+                    <label></label>
+
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+                    <label></label>
+
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+
+                    <label></label>
+                        <br> <br>
+                    </div>
+
+                <div class="field col">
+                <!--button pButton pRipple label="Ajouter" icon="pi pi-plus" class="p-button-primary mr-6" (click)="addInputLine()"></button-->
+                    <br> <br>
+                </div>
+
+            </div>
+            
+
+            <!-- -->
+            <div *ngFor="let line of arrayIndicateurPlan; let i = index">
+                <div class="formgrid grid">
+
+                  <div class="field col">
+                    <label for="libele_DP{{i}}">Libelé Date</label>
+                    <input disabled type="text" id="libele_DP{{i}}" pInputText [(ngModel)]="line.libele_DP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.libele_DP}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.libele_DP">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
+                    <label for="date_planification{{i}}">Date Plan</label>
+                    <input disabled type="text" id="date_planification{{i}}" pInputText [(ngModel)]="line.date_planification"  inputId="icon" autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.date_planification}" >
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.date_planification">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
+                    <label for="valeur_cible_date{{i}}">valeur Cible</label>
+                    <input disabled type="text" id="valeur_cible_date{{i}}" pInputText [(ngModel)]="line.valeur_cible_date" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.valeur_cible_date}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.valeur_cible_date">Ce champs est obligatoire</small>
+                  </div>
+
+                  <div class="field col">
+                    <label for="valeur_reele{{i}}">Valeur réalisée</label>
+                    <input type="text" id="valeur_reele{{i}}" pInputText [(ngModel)]="line.valeurReele" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submittedDP && !line.valeurReele}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submittedDP && !line.valeurReele">Ce champs est obligatoire</small>
+                  </div>
+              
+                  <div class="field col">
+                    <label><br></label>
+                    <div class="d-flex justify-content-end">
+                    <button pButton pRipple type="button" label="Enregistrer" class="p-button-primary p-button-text mr-2  field col" (click)="editValeurDP(line.id_date_prevue,line.valeurReele)"></button>
+                    <button pButton pRipple type="button" label="Supprimer" class="p-button-danger p-button-text field col"></button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+                        
+        </ng-template>
+        
+  
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Fermer" icon="pi pi-times" class="p-button-text" (click)="hideDialogDP()"></button>
+            <!--button  type="submit" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="createIndicateurDP()"></button-->
+  
+        </ng-template>
+  
+    </p-dialog>
 
 
 

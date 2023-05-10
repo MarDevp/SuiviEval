@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Objectif } from 'src/app/model/Objectif';
 import { ObjectifService } from 'src/app/demo/service/objectif.service';
 import { MessageService } from 'primeng/api';
+import { ProjectService } from 'src/app/demo/service/project.service';
+
 
 
 
@@ -26,9 +28,11 @@ export class CadreLogiqueComponent {
 
       ];
 
-      constructor(private objectifservice: ObjectifService, private messageService: MessageService) { }
+      constructor(private projectservice: ProjectService,private objectifservice: ObjectifService, private messageService: MessageService) { }
 
-      ngOnInit() { }
+      ngOnInit() {
+        this.listOfProjects();
+       }
 
       openNewObjGlobal() {
        // this.project = {};
@@ -96,4 +100,141 @@ export class CadreLogiqueComponent {
     console.log("stop");
 
   }
+
+
+// get liste des objectifs ( pas resultats) by projet_id
+
+
+objectifsAndIndi : any[] = [];
+ee : any[] = [];
+
+objectifs : any;
+
+/*ObjectifByProjetId(id:number): void {
+
+  this.projectservice.getObjectiffByProjetId(id)
+    .subscribe(res => {
+      console.log("start");
+
+      this.objectifs = res;
+     
+    
+      for ( let objectif of this.objectifs ) 
+      {
+        
+        
+
+        this.indicateurByObjectifId(objectif.idObjectif).then(res => {
+          console.log("res0000",res[0]); // access first object in array
+          this.ee=res[0];
+          console.log("eeeeeee1",this.ee);
+          this.objectifsAndIndi.push('o',objectif);
+          this.objectifsAndIndi.push('i',this.ee);
+        }).catch(error => {
+          console.error(error);
+        });
+
+  
+    }
+
+    console.log("OBJ AND INDI",this.objectifsAndIndi);
+
+
+    });
+
+}*/
+
+
+ObjectifByProjetId(id:number): void {
+
+  this.projectservice.getObjectiffByProjetId(id)
+    .subscribe(res => {
+      console.log("start");
+
+      this.objectifs = res;
+
+      for (let objectif of this.objectifs) {
+
+        this.indicateurByObjectifId(objectif.idObjectif).then(res => {
+          console.log("res0000",res[0]); // access first object in array
+          const ee = res;
+          console.log("eeeeeee1",ee);
+
+          // Push an object containing both the objectif and ee properties
+          this.objectifsAndIndi.push({objectif, ee});
+
+        }).catch(error => {
+          console.error(error);
+        });
+      }
+
+      console.log("OBJ AND INDI", this.objectifsAndIndi);
+    });
+}
+
+
+
+
+
+
+
+
+
+//listes des projets pour le dropdown 
+listOfProjects(): void {
+
+  this.projectservice.getAllProjects()
+    .subscribe(res => {
+      this.projects = res;
+      //this.selectedProject = this.projects[0]; 
+   
+
+
+    });
+}
+
+
+projects: any
+selectedProject: any;
+selectedNameProject : any;
+selectedIdProject : any;
+
+getSelectedProject(event:any) : void {
+  //console.log("msg");
+
+  this.selectedNameProject=event.value.intitule_projet;
+  this.selectedIdProject=event.value.id_projet;
+
+ // console.log("idpro", this.selectedIdProject);
+
+  this.ObjectifByProjetId(this.selectedIdProject);
+
+}
+
+
+// get les indicateurs d'objectifs par objectif_id
+indicateurs_objectif : any;
+/*indicateurByObjectifId(id:number): any {
+
+  this.projectservice.getIndicateursByObjectifId(id)
+    .subscribe(res => {
+      //console.log("start");
+      this.indicateurs_objectif = res;
+     // console.log("value obj",this.indicateurs_objectif);
+     return  this.indicateurs_objectif;
+  
+    });
+
+}*/
+
+indicateurByObjectifId(id:number): Promise<any> {
+  return new Promise((resolve, reject) => {
+    this.projectservice.getIndicateursByObjectifId(id).subscribe(res => {
+      resolve(res);
+    }, err => {
+      reject(err);
+    });
+  });
+}
+
 }

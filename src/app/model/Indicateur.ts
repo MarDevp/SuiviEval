@@ -15,7 +15,7 @@ export class Indicateur{
     valeur_initiale_indicateur ?: number;
     objres ?: number;
     id_objres ?: number;
-
+    objectif ?: any;
 constructor(){}
 
 

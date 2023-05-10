@@ -1,94 +1,78 @@
     <div class="grid">
+    
+        
+        <div class="col-12 lg:col-12 xl:col-12">
+            <div class="card mb-0">
+                <p-dropdown [options]="projects" [(ngModel)]="selectedProject" optionLabel="intitule_projet" placeholder="Selectionnez un projet" class="mr-2" [showClear]="false"  value="intitule_projet" (onChange)="getSelectedProject($event)"></p-dropdown>
+
+            </div>
+        </div>
+
+        
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Orders</span>
-                        <div class="text-900 font-medium text-xl">152</div>
+                        <span class="block text-500 font-medium mb-3">Objectifs</span>
+                        <div class="text-900 font-medium text-xl">{{nb_o}}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-blue-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">24 new </span>
-                <span class="text-500">since last visit</span>
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Revenue</span>
-                        <div class="text-900 font-medium text-xl">$2.100</div>
+                        <span class="block text-500 font-medium mb-3">Résultats Attendus</span>
+                        <div class="text-900 font-medium text-xl">{{nb_r}}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-orange-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-map-marker text-orange-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">%52+ </span>
-                <span class="text-500">since last week</span>
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Customers</span>
-                        <div class="text-900 font-medium text-xl">28441</div>
+                        <span class="block text-500 font-medium mb-3">Activités</span>
+                        <div class="text-900 font-medium text-xl">10</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-inbox text-cyan-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">520  </span>
-                <span class="text-500">newly registered</span>
+            
             </div>
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
                 <div class="flex justify-content-between mb-3">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Comments</span>
-                        <div class="text-900 font-medium text-xl">152 Unread</div>
+                        <span class="block text-500 font-medium mb-3">Indicateurs</span>
+                        <div class="text-900 font-medium text-xl">{{nb_i }}</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-purple-100 border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
                         <i class="pi pi-comment text-purple-500 text-xl"></i>
                     </div>
                 </div>
-                <span class="text-green-500 font-medium">85 </span>
-                <span class="text-500">responded</span>
             </div>
         </div>
 
         <div class="col-12 xl:col-6">
             <div class="card">
-                <h5>Recent Sales</h5>
-                <p-table [value]="products" [paginator]="true" [rows]="5" responsiveLayout="scroll">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Image</th>
-                            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                            <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                            <th>View</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-product>
-                        <tr>
-                            <td style="width: 15%; min-width: 5rem;">
-                                <img src="assets/demo/images/product/{{product.image}}" class="shadow-4" alt="{{product.name}}" width="50">
-                            </td>
-                            <td style="width: 35%; min-width: 7rem;">{{product.name}}</td>
-                            <td style="width: 35%; min-width: 8rem;">{{product.price | currency:'USD'}}</td>
-                            <td style="width: 15%;">
-                                <button pButton pRipple type="button" icon="pi pi-search" class="p-button p-component p-button-text p-button-icon-only"></button>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                <h5>Nombre d'indicateurs par objectif</h5>
+                
+                    <p-chart type="doughnut" [data]="pieData" [options]="pieOptions"></p-chart>
+           
             </div>
             <div class="card">
                 <div class="flex justify-content-between align-items-center mb-5">
-                    <h5>Best Selling Products</h5>
+                    <h5>Best Selling prod</h5>
                     <div>
                         <button pButton type="button" icon="pi pi-ellipsis-v" class="p-button-rounded p-button-text p-button-plain" (click)="menu.toggle($event)"></button>
                         <p-menu #menu [popup]="true" [model]="items"></p-menu>
@@ -173,7 +157,9 @@
 
         <div class="col-12 xl:col-6">
             <div class="card">
-                <h5>Sales Overview</h5>
+                <h5>Indicateurs</h5>
+                <p-dropdown [options]="indic" [(ngModel)]="selectedIndicateur" optionLabel="libele_indicateur" placeholder="Selectionnez un indicateur" class="mr-2" [showClear]="false"  value="libele_indicateur" (onChange)="getSelectedIndicateur($event)"></p-dropdown>
+                <br><br><br>
                 <p-chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
             </div>
 

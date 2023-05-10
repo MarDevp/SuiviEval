@@ -17,6 +17,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from "primeng/calendar";
 import { FormsModule } from '@angular/forms';
+import { TagModule } from 'primeng/tag';
+
 
 
 
@@ -38,7 +40,8 @@ import { FormsModule } from '@angular/forms';
         RadioButtonModule,
         InputNumberModule,
         DialogModule,
-        CalendarModule
+        CalendarModule,
+        TagModule
 
 
     ],

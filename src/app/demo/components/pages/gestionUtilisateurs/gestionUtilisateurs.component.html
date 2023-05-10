@@ -2,20 +2,17 @@
     <div class="col-12">
         <div class="card">
 
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    
-                   
-                    <div class="my-2 float-right">
+         
+              
+
+                    <div class="my-2 text-right">
                         <button pButton pRipple label="Ajout Utilisateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                 
-                </div>
+                      </div>
+
+                <br><br>
                    
-                </ng-template>
-
-            </p-toolbar>
-
-
+             
+        
 
 
             <p-table #dt [value]="users"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
@@ -63,9 +60,12 @@
                             {{user.email}}
                         </td>
 
+
+
                         <td style="width:20%; min-width:8rem;">
                             <span class="p-column-title">Role</span>
-                            {{user.role_user}}
+                            <p-tag severity="primary" value="{{user.role_user}}"></p-tag>
+                          
                         </td>
                        
 
