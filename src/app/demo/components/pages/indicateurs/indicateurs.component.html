@@ -3,17 +3,18 @@
         <div class="card">
             
         
-            <p-toolbar styleClass="mb-4">
-                <ng-template pTemplate="left">
-                    
-                    <p-dropdown [options]="projects" [(ngModel)]="selectedProject" optionLabel="intitule_projet" placeholder="Selectionnez un projet" class="mr-2" [showClear]="false"  value="intitule_projet" (onChange)="getSelectedProject($event)"></p-dropdown>
+            <div class="my-2 text-right">
+                <p-dropdown [options]="projects" [(ngModel)]="selectedProject" optionLabel="intitule_projet" placeholder="Selectionnez un projet" class="mr-2" [showClear]="false" value="intitule_projet" (onChange)="getSelectedProject($event)" style="display: inline-block; vertical-align: middle;"></p-dropdown>
+                <div *ngIf="ajoutB" style="display: inline-block; vertical-align: middle;">
+                  <button pButton pRipple label="Ajouter Indicateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                </div>
+              </div>
+              
+              
+                <br><br>
 
-                    <div class="my-2 float-right"  *ngIf="ajoutB">
-                        <button pButton pRipple label="Ajouter Indicateur" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                    </div>
                    
-            </ng-template>
-            </p-toolbar>
+         
 
 
             <p-table #dt [value]="indicObjectif"  responsiveLayout="scroll"  [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  [rowHover]="true" dataKey="id">
